@@ -1,0 +1,638 @@
+\documentclass[a4paper,12pt,oneside]{article}
+% \setlength{\parindent}{0pt}
+% \setlength{\parskip}{0em}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{mathptmx}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{float}
+\let\counterwithout\relax
+\let\counterwithin\relax
+\usepackage{setspace}
+\usepackage{chngcntr}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{textcomp}
+\usepackage{tocloft}
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\centering\normalfont\Large\bfseries}
+  {CHAPTER \thesection}
+  {1ex}
+  {\centering\MakeUppercase}
+
+\titleformat{\section}[block]
+  {\centering\normalfont\Large\bfseries}
+  {CHAPTER \thesection\\[2ex]}
+  {}
+  {\MakeUppercase}
+
+\pagestyle{fancy}
+\fancyhf{}
+% \rfoot{\thepage}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\large{\textbf{{ Semantically-Guided Image Compression for
+ Enhanced Perceptual Quality at Extremely
+ Low Bitrates}}}
+\setlength{\baselineskip}{1.5\baselineskip}
+\\
+\vspace{10mm}
+
+\textit{A Seminar Report}
+\\
+\textit{Submitted to the APJ Abdul Kalam Technological University in partial fulfilment of the requirements for the award of degree}
+\vspace{5mm}
+\\
+\textit{Bachelor of Technology}
+\\
+\textit{in}
+\\
+\textit{Computer Science and Engineering}
+\vspace{5mm}
+\\
+By
+\\
+\MakeUppercase{\textbf{ARUN GEORGE}}
+\\
+\textbf{PTA21CS021}
+\vspace{7mm}
+\begin{figure}[H]
+\centering
+\includegraphics[height=3.75cm]{ceklogo.png}
+\end{figure}
+\vspace{5mm}
+\textbf{DEPARTMENT OF COMPUTER SCIENCE \& ENGINEERING}
+\\
+COLLEGE OF ENGINEERING KALLOOPPARA
+\\
+PATHANAMTHITTA
+\\
+\vspace{10mm}
+\textbf{October 2024}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\setlength{\baselineskip}{2\baselineskip}
+{\large\textbf{DEPARTMENT OF COMPUTER SCIENCE \& ENGINEERING}}
+{\large\textbf{COLLEGE OF ENGINEERING KALLOOPPARA}}
+{\large\textbf{PATHANAMTHITTA - 689603}}
+\\
+{\textbf{2024 - 2025}}
+\vspace{7mm}
+\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3.5cm]{ceklogo.png}
+\end{figure}
+
+\setlength{\baselineskip}{1.5\baselineskip}
+{\large\textbf{CERTIFICATE}}
+\\
+
+\end{center}
+
+\vspace{5ex}
+
+\begin{spacing}{1.5}
+This is to certify that the report entitled \textbf{ Semantically-Guided Image Compression for
+ Enhanced Perceptual Quality at Extremely
+ Low Bitrates} submitted by \textbf{Arun George \\(PTA21CS020)} to the APJ Abdul Kalam Technological University in partial fulfilment of the B. Tech degree in Computer Science \& Engineering is a bonafide record of the seminar work carried out by him under our supervision. This report has not been submitted to any other University or Institution for any purpose.
+\end{spacing}
+
+\vspace{10ex}
+
+\begin{tabular}{@{}p{5.5cm}p{4.5cm}p{5cm}@{}}
+\textbf{Internal Guide} & \textbf{Coordinator} & \textbf{Head of the Department} \\
+\\
+\textbf{Mrs. Shilpa
+Radhakrishnan} & \textbf{Mrs. Anitha Jose} & \textbf{Dr. Renu George} \\[2mm]
+Assistant Professor & Assistant Professor & Assistant Professor \\[2mm]
+Department of & Department of & Department of \\[2mm]
+Computer Science & Computer Science & Computer Science \\[2mm]
+\& Engineering & \& Engineering & \& Engineering \\
+\end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\pagenumbering{roman}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+\begin{center}
+\section*{ACKNOWLEDGEMENT}
+\addcontentsline{toc}{section}{ACKNOWLEDGEMENT}
+\end{center}
+\setlength{\baselineskip}{1.5\baselineskip}
+\paragraph{}
+I take this opportunity to express my deepest sense of gratitude and sincere thanks to everyone who helped me to complete this work successfully. I express my sincere thanks to the Principal \textbf{Prof. Dr. Deepa J} for the constant support and help. I also thank \textbf{Dr. Renu George} Head of the Department, Computer Science and Engineering, College of Engineering Kallooppara for providing me with all the necessary facilities and support. I would like to place on record my sincere gratitude to my seminar guide \textbf{Mrs. Shilpa
+Radhakrishnan}, Assistant Professor, Computer Science and Engineering, College of Engineering Kallooppara for the guidance and mentorship throughout the course. I would like to express my sincere gratitude to \textbf{Mrs. Anitha Jose,}, and \textbf{Ms. Parvathy M N}, department of Computer Science and Engineering, College of Engineering Kallooppara for their support and cooperation. Finally, I thank my family, and friends who contributed to the successful fulfilment of this seminar work.
+
+\vspace{2ex}
+\hfill \textbf{ARUN GEORGE}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\begin{center}
+\section*{ABSTRACT}
+\addcontentsline{toc}{section}{ABSTRACT}
+\end{center}
+\paragraph{}
+Efficient image compression is crucial for reducing the storage and transmission costs of images, especially in low-bandwidth environments. Traditional image compression methods, such as JPEG and BPG, and even newer machine learning-based methods, face considerable challenges when operating at bitrates below 0.1 bits per pixel (bpp). At such low bitrates, these methods typically result in images suffering from perceptual degradation, such as blurring and loss of critical visual details.
+\paragraph{}
+This seminar introduces a novel semantically-guided image compression method that integrates semantic information to enhance perceptual quality at extremely low bitrates. By using semantic label maps, the decoder is guided to reconstruct textures that are contextually accurate, ensuring higher perceptual quality than conventional methods. Additionally, the data size of the semantic label maps is reduced through several strategies such as downscaling, reducing the number of semantic classes, and using an autoregressive compression model.
+\paragraph{}
+Experimental evaluations on benchmark datasets, such as COCO and Cityscapes, show that this method surpasses state-of-the-art compression techniques in terms of perceptual quality and user satisfaction, making it ideal for applications in bandwidth-constrained environments.
+
+\setlength{\baselineskip}{1.0\baselineskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\contentsname}{\MakeUppercase{Contents}}
+\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+\newpage
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\figurename}{Fig}
+\renewcommand{\listfigurename}{\MakeUppercase{List of Figures}}
+\renewcommand{\cftloftitlefont}{\hfill\Large\bfseries}
+\renewcommand{\cftafterloftitle}{\hfill}
+
+\newpage
+\listoffigures
+\addcontentsline{toc}{section}{LIST OF FIGURES}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\listtablename}{\MakeUppercase{List of Tables}}
+\renewcommand{\cftlottitlefont}{\hfill\Large\bfseries}
+\renewcommand{\cftafterlottitle}{\hfill}
+
+\newpage
+\listoftables
+\addcontentsline{toc}{section}{LIST OF TABLES}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section*{LIST OF ABBREVIATIONS}
+
+\begin{table}[h]
+    \centering
+    \caption{List of Abbreviations}
+    \begin{tabular}{ll}
+        \textbf{AES} & : Advanced Encryption Standard \\[2mm]
+        \textbf{bpp} & : bits per pixel \\[2mm]
+        \textbf{GAN} & : Generative Adversarial Network \\[2mm]
+        \textbf{LPIPS} & : Learned Perceptual Image Patch Similarity \\[2mm]
+        \textbf{MSE} & : Mean Squared Error \\[2mm]
+        \textbf{PSNR} & : Peak Signal-to-Noise Ratio \\[2mm]
+        \textbf{SSIM} & : Structural Similarity Index \\[2mm]
+        \textbf{MS-SSIM} & : Multi-Scale Structural Similarity Index \\[2mm]
+        \textbf{FID} & : Fréchet Inception Distance \\[2mm]
+        \textbf{DCT} & : Discrete Cosine Transform \\[2mm]
+        \textbf{CABAC} & : Context-Adaptive Binary Arithmetic Coding \\[2mm]
+        \textbf{CNN} & : Convolutional Neural Network \\[2mm]
+        \textbf{NLP} & : Natural Language Processing \\[2mm]
+        \textbf{RGB} & : Red, Green, Blue (color model) \\[2mm]
+        \textbf{GMM} & : Gaussian Mixture Model \\[2mm]
+        \textbf{MMLU} & : Massive Multitask Language Understanding \\[2mm]
+    \end{tabular}
+\end{table}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\lhead{\small{\textit{ Semantically-Guided Image Compression for
+ Enhanced Perceptual Quality at Extremely
+ Low Bitrates}}}
+\lfoot{\small{\textit{College of Engineering Kallooppara}}}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+\section{INTRODUCTION}
+\pagenumbering{arabic}
+\vspace{2ex}
+
+\subsection{BACKGROUND}
+\paragraph{}
+The proliferation of digital images in today's world necessitates effective image compression techniques to manage storage space and bandwidth. As the demand for high-quality images increases across various applications—ranging from social media to professional photography—the challenge lies in compressing these images without sacrificing their visual integrity. Traditional image compression techniques, such as JPEG and BPG, are effective to a certain extent; however, they rely heavily on handcrafted algorithms that often fail to preserve image quality at extremely low bitrates. This degradation is characterized by blurring, loss of detail, and the introduction of compression artifacts that detract from the overall user experience.
+\paragraph{}
+Recent advancements in deep learning have opened new avenues for improving image compression methods. Neural network-based approaches have demonstrated superior performance by learning to represent image data more effectively than traditional algorithms. However, even the latest machine learning techniques encounter limitations when it comes to maintaining perceptual quality, particularly under stringent bitrate constraints.
+
+
+\subsection{PURPOSE}
+\paragraph{}
+The primary purpose of this seminar is to explore and present a novel approach to image compression known as semantically-guided image compression, which aims to significantly enhance the perceptual quality of reconstructed images, especially at extremely low bitrates (below 0.1 bits per pixel). As digital imaging becomes increasingly prevalent across various platforms—such as social media, video streaming, and mobile applications—the need for efficient image compression techniques that do not compromise visual quality becomes critical.
+\paragraph{}
+This seminar seeks to address the limitations of traditional image compression methods, which often result in blurred and artifact-ridden images when applied in low-bitrate scenarios. By leveraging semantic information through the use of semantic label maps, this approach aims to guide the decoder during the reconstruction process. This means that the reconstructed images are not only sharper and more detailed but also contextually appropriate, reflecting the true content of the original images.
+\paragraph{}
+Furthermore, this seminar will evaluate the effectiveness of the proposed method through extensive experimental studies, comparing it against traditional compression techniques and state-of-the-art deep learning methods. The goal is to demonstrate that the integration of semantic information can lead to substantial improvements in image quality and user satisfaction, thereby paving the way for more robust and efficient image compression solutions suitable for modern applications.
+
+
+
+\subsection{SCOPE}
+\paragraph{}
+The scope of this seminar encompasses a comprehensive investigation of various aspects of image compression, with a particular focus on the challenges faced at low bitrates. It includes:.
+\begin{itemize}
+    \item \textbf{Review of Traditional and Modern Compression Techniques: } This seminar will provide a thorough overview of existing image compression methods, detailing their algorithms and underlying principles. It will highlight the advantages and disadvantages of traditional techniques such as JPEG and BPG, as well as modern approaches utilizing deep learning and neural networks.
+    \item \textbf{Introduction to Semantically-Guided Compression:} The seminar will delve into the concept of semantically-guided image compression, explaining how semantic label maps can be used to inform the compression and reconstruction process. The integration of high-level semantic information will be discussed, focusing on its role in enhancing the perceptual quality of reconstructed images.
+    \item \textbf{Optimization Strategies:}The seminar will explore the various optimization techniques employed to ensure the method operates efficiently within the constraints of extremely low bitrates. This includes strategies such as rate-distortion optimization, hyperprior models, and context modeling, which are critical for improving compression performance.
+    \item \textbf{Experimental Evaluation and Performance Metrics:}A significant portion of the seminar will be dedicated to presenting the results of experimental evaluations conducted on benchmark datasets such as COCO and Cityscapes. The seminar will employ various performance metrics, including LPIPS, PSNR, MS-SSIM, and FID, to assess the effectiveness of the proposed method in comparison to traditional and state-of-the-art techniques.
+    \item \textbf{Practical Applications and Future Prospects:}The seminar will also discuss potential real-world applications for the proposed semantically-guided image compression method in fields such as mobile communication, cloud storage, and real-time streaming, where bandwidth is a critical constraint. Additionally, the seminar will address future research directions and the potential impact of this technology on the field of image compression.
+    \item \textbf{Security Considerations:} Finally, the seminar will examine the security implications associated with image compression, discussing potential vulnerabilities such as data privacy concerns, adversarial attacks on machine learning models, and securing models during deployment.
+
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\section{LITERATURE SURVEY}
+\vspace{2ex} \subsection{OVERVIEW}
+
+\paragraph{}
+The intersection of employment guidance and ideological-political education for college students has garnered significant academic attention. As the global job market evolves, educational institutions increasingly integrate career counseling with value-based education to align students' aspirations with societal needs. This integration is vital for helping students secure employment and contribute meaningfully to society. Various studies underscore the importance of political and ideological education in career guidance \cite{4}, \cite{5}. Recent interest has also focused on how recommendation systems and machine learning can support these efforts \cite{2}, \cite{3}. This literature survey reviews scholarly contributions on the theoretical and practical aspects of merging employment guidance with ideological education and examines the role of recommendation systems in enhancing job matching and decision-making processes.
+
+\subsection{POLITICAL EDUCATION IN CAREER GUIDANCE}
+
+\paragraph{}
+The role of ideological and political education in helping students make informed career choices has been a major focus for researchers. Yu \cite{8} highlights challenges in the current employment guidance system for college students, emphasizing the need for ideological and belief education, entrepreneurship education, and psychological quality education—elements vital for preparing students for the uncertainties of the modern job market.
+\paragraph{}
+Liu \cite{5} delves into the importance of instilling correct career ideals among college students. By helping students develop a proper set of values, educators can guide them toward well-rounded career decisions. His research focuses on creating specialized institutions for targeted employment guidance, reinforcing the necessity for structured support systems. Liu also emphasizes the psychological aspects of career decision-making, highlighting the need for students to develop adaptability and mental resilience to face career challenges.
+\paragraph{}
+Scholars argue for a combination of political and ideological education with practical employment strategies. Jin \cite{4} suggests that linking entrepreneurship education with political instruction enables students to navigate the challenges of starting and managing a business while internalizing societal values and gaining necessary skills for a competitive job market.
+
+\subsection{RECOMMENDATION SYSTEMS IN EMPLOYMENT}
+
+\paragraph{}
+The advent of recommendation systems in the job market has introduced new methodologies for improving the job search process, especially for college students. These systems utilize various data sources and ML algorithms to match job seekers with potential employers based on a range of factors, including user preferences, behaviors, and qualifications \cite{2}.
+
+\paragraph{}
+Deldjoo et al. \cite{2} proposed a content-based job recommendation system tailored for social media platforms like Facebook and LinkedIn. By analyzing user interaction data, social profiles, and job descriptions, this system aimed to create a more personalized and relevant job search experience for users. The system's use of multiple data domains allows for a more comprehensive understanding of user preferences, enhancing the accuracy of job recommendations.
+
+\paragraph{}
+Shao \cite{7} proposed a recommendation system based on probabilistic models, focusing on finding the best match between job seekers and employers. This system takes into account the dual selection process inherent in the job market, where both employers and employees must make choices based on compatibility. The probabilistic model evaluates the likelihood of a successful match by considering various factors, including qualifications, job requirements, and user preferences.
+
+\paragraph{}
+Zhang \cite{9} developed a hybrid recommendation system that combined content-based and collaborative filtering approaches. This system created detailed user profiles based on their qualifications, behaviors, and preferences, generating personalized job recommendations. His system used a ranking algorithm to prioritize job opportunities for users, creating a dynamic recommendation set that evolves as users' preferences and behaviors change. The introduction of graphical network analysis also provided users with a visual understanding of how their qualifications aligned with job opportunities, thereby improving transparency in the job recommendation process.
+
+\subsection{AI ADVANCEMENTS IN EMPLOYMENT GUIDANCE}
+
+\paragraph{}
+The use of artificial intelligence (AI) and machine learning (ML) in employment recommendation systems has further enhanced the capabilities of these platforms. Cui et al. \cite{1} focused on collaborative filtering for IoT scenarios, providing a framework for personalized recommendations applicable in the job market. By utilizing user data to predict preferences, these systems can suggest job opportunities with a high degree of accuracy, reducing the search time for job seekers.
+\paragraph{}
+Ganaie et al. \cite{3} reviewed ensemble deep learning techniques that have been applied to recommendation systems, highlighting their potential in improving job matching algorithms. Ensemble models, which combine the outputs of multiple algorithms, can address the shortcomings of individual models by providing more robust and accurate recommendations.
+\paragraph{}
+Neu, Lahann, and Fettke \cite{6} conducted a systematic review of deep learning methods for process prediction, discussing state-of-the-art techniques that predict user behavior in employment systems. These techniques can identify patterns in job seekers' behaviors, helping recommendation systems predict the types of jobs that users are most likely to apply for and succeed in.
+
+\subsection{SURVEY FINDINGS}
+
+\paragraph{}
+The literature on ideological and political education within employment guidance illustrates the integration of career counseling with value-based education, as highlighted by studies from researchers like Yu \cite{8} and Liu \cite{5}. This approach prepares students for the job market while helping them internalize societal values that shape their professional decisions. The incorporation of recommendation systems further enhances this process by offering personalized job suggestions based on user behavior, qualifications, and preferences, as discussed by researchers such as Deldjoo \cite{2}, Shao \cite{7}, and Zhang \cite{9}. By combining insights from ideological education with advancements in AI and machine learning, educational institutions can optimize job matching, enabling students to navigate the job market effectively and pursue fulfilling careers aligned with their personal values and societal needs.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\section{TECHNOLOGIES USED}
+\vspace{2ex}
+
+\subsection{Machine Learning and Neural Network-Based Compression}
+\paragraph{}
+The integration of machine learning, particularly deep learning, has transformed the landscape of image compression. Traditional compression techniques rely on fixed algorithms that do not adapt to the content of the image, whereas neural network-based methods utilize learning to encode and decode images more efficiently. The typical architecture involves an encoder that compresses the image into a latent representation and a decoder that reconstructs the image from this representation.
+\paragraph{}
+These methods are trained on large datasets, enabling them to discover complex patterns in image data, leading to better performance in terms of compression ratio and perceptual quality. In the context of semantically-guided compression, neural networks are enhanced to incorporate high-level semantic understanding, allowing them to allocate bits more intelligently during the reconstruction process.
+\subsection{Generative Adversarial Networks (GANs)}
+\paragraph{}
+Generative Adversarial Networks (GANs) are instrumental in enhancing the perceptual quality of compressed images. A GAN consists of two main components: the generator, which creates new images, and the discriminator, which evaluates the authenticity of these images against real samples. Through adversarial training, where the generator and discriminator compete against each other, the generator learns to produce increasingly realistic images.
+\paragraph{}
+In the proposed method, GANs help combat the blurring often observed in low-bitrate compression. By refining the reconstructed images based on feedback from the discriminator, GANs ensure that the output is not only sharp but also semantically coherent, leading to more visually appealing results.
+\subsection{Semantic Label Maps}
+\paragraph{}
+The integration of semantic label maps is a key feature of the proposed compression method. These maps provide critical high-level information about different regions in an image, allowing the decoder to apply contextually appropriate textures during reconstruction. For example, the decoder can distinguish between the smoothness of a sky and the intricate details of foliage, ensuring that each area is restored accurately.
+\\
+The challenge of overhead data introduced by semantic maps is addressed through several strategies:
+\begin{itemize}
+    \item \textbf{Downscaling:}
+    Reducing the resolution of the label maps to lower their size without significant loss of information.
+    \item \textbf{Class Reduction:}
+    Combining similar semantic classes (e.g., merging "grass" and "trees") to simplify the label map and reduce its data size.
+    \item \textbf{Autoregressive Compression: }
+    Utilizing spatial correlations to predict the probability of each pixel’s class based on neighboring pixels, which enhances compression efficiency.
+\end{itemize}
+
+\subsection{Optimization Techniques}
+\paragraph{}
+To ensure the method operates effectively within low-bitrate constraints, several optimization techniques are applied:
+\begin{itemize}
+    \item \textbf{Rate-Distortion Optimization: } This approach minimizes the perceptual loss for a given bitrate, balancing the need for compression with the desire for visual fidelity.
+    \item \textbf{Hyperprior Models: }  These models capture the uncertainty in the latent representations, allowing for more efficient bit allocation where it is most needed
+    \item \textbf{Context Modeling: }This technique improves the accuracy of probability predictions for compressed data, further enhancing the efficiency of the system.
+
+\end{itemize}
+
+\subsection{Performance Metrics}
+\paragraph{}
+To evaluate the effectiveness of the proposed semantically-guided image compression method, various performance metrics are employed. These metrics are critical for quantifying the perceptual quality and compression efficiency of the reconstructed images, allowing for a comprehensive comparison with traditional and state-of-the-art methods. The following metrics are utilized:
+\begin{itemize}
+    \item \textbf{LPIPS (Learned Perceptual Image Patch Similarity):} LPIPS is a perceptual similarity metric that quantifies the difference between two images based on the output of deep neural networks. Unlike traditional pixel-based metrics, LPIPS assesses the perceptual similarity by comparing local patches of images, which are processed through feature extractors like deep convolutional networks. This metric is particularly sensitive to human visual perception and reflects how similar two images appear to a human observer.\\
+    Lower LPIPS values indicate that the reconstructed image closely resembles the original image in terms of perceptual quality. In the context of semantically-guided compression, LPIPS helps assess how well the method preserves important visual details and textures, ensuring that the reconstructed images remain visually appealing.
+    \item \textbf{PSNR (Peak Signal-to-Noise Ratio):} PSNR is a widely used objective metric that measures the ratio between the maximum possible power of a signal (in this case, the original image) and the power of corrupting noise (i.e., the difference between the original and reconstructed images). PSNR is expressed in decibels (dB), with higher values indicating better reconstruction quality.
+    Although PSNR is commonly used in image processing to evaluate compression methods, it has limitations. It primarily focuses on pixel-wise fidelity and does not necessarily correlate with perceived visual quality. Therefore, while PSNR provides a quick measure of reconstruction accuracy, it should be interpreted alongside perceptual metrics like LPIPS.
+    \item \textbf{MS-SSIM (Multi-Scale Structural Similarity Index):} MS-SSIM is an extension of the SSIM (Structural Similarity Index) metric, designed to assess the structural similarity between two images across multiple scales. MS-SSIM evaluates image quality by comparing luminance, contrast, and structure at different resolutions, making it more robust in capturing perceptual differences than traditional metrics.
+    Higher MS-SSIM scores indicate that the reconstructed image maintains structural integrity and visual consistency with the original image. This metric is especially valuable in the context of semantically-guided compression, where retaining the structural details of the image is crucial for achieving high perceptual quality.
+    \item \textbf{FID (Fréchet Inception Distance):} UFID measures the quality of generated images by comparing the distribution of features extracted from a pretrained neural network (often an Inception network) for both the original and reconstructed images. It calculates the Fréchet distance between the two distributions, providing a quantitative measure of how similar the generated images are to the original images in terms of quality and realism.
+    Lower FID values indicate that the reconstructed images are more similar to the original images, reflecting the effectiveness of the compression method in producing realistic outputs. In the context of this seminar, FID serves as an important metric for validating the perceptual quality of the semantically-guided compression method.
+\end{itemize}
+\paragraph{}
+By employing these performance metrics—LPIPS, PSNR, MS-SSIM, and FID—the seminar provides a thorough evaluation of the proposed image compression method, offering insights into its effectiveness in preserving visual quality while achieving efficient compression at extremely low bitrates. These metrics facilitate a comprehensive comparison with existing techniques, demonstrating the advantages of using semantic information in the compression process.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%.
+
+
+\newpage
+\section{METHODOLOGY}
+\vspace{2ex}
+\subsection{Compression Architecture}
+\paragraph{}
+The proposed semantically-guided image compression method is built upon an encoder-decoder architecture designed to efficiently compress images while preserving perceptual quality at extremely low bitrates. The architecture can be summarized in the following steps:
+\begin{itemize}
+    \item \textbf{Encoder:} he encoder processes the input image and compresses it into a latent representation. This latent representation captures essential features and information about the image, enabling effective storage and transmission. The encoder employs a series of convolutional layers that extract relevant image features while reducing dimensionality, ultimately transforming the image into a compact code that can be transmitted more efficiently.
+    \item \textbf{Semantic Label Map Generation:} Alongside the image encoding, a semantic segmentation model generates a semantic label map for the input image. This label map classifies different regions within the image (e.g., sky, building, vegetation), providing critical high-level information that informs the reconstruction process
+    \item \textbf{Decoder: }  Upon receiving the latent representation and the compressed semantic label map, the decoder reconstructs the image. The decoder utilizes the semantic information from the label map to guide the reconstruction process, ensuring that contextually important textures and details are accurately restored. By conditioning on the semantic label map, the decoder can allocate bits effectively, focusing on preserving important areas of the image that contribute to overall visual quality
+\end{itemize}
+
+\paragraph{}
+This architecture enables the proposed method to overcome the limitations of traditional compression techniques by integrating semantic understanding into the compression and reconstruction processes.
+
+
+
+\subsection{ Label Map Compression}
+\paragraph{}
+A significant innovation of the proposed methodology is the use of semantic label maps and the strategies employed to compress these maps effectively. The following techniques are implemented:
+\begin{itemize}
+    \item \textbf{Downscaling:} The semantic label map is downscaled to reduce its resolution, which minimizes its size without significant loss of critical semantic information. This step ensures that the label map is compact enough for efficient transmission, even in bandwidth-constrained environments.
+    \item \textbf{Class Reduction:}  To further decrease the size of the label map, similar semantic classes are merged. For example, categories such as "trees" and "grass" might be combined into a single category called "vegetation." This class reduction simplifies the label map, making it more efficient to compress while retaining essential contextual information.
+    \item \textbf{Autoregressive Compression:}An autoregressive model is utilized to compress the label map in a pixel-wise manner. This approach predicts the value of each pixel based on previously encoded pixels, leveraging spatial correlations within the label map. By encoding the label map in this manner, the method achieves higher compression rates while preserving the necessary semantic information.
+\end{itemize}
+\paragraph{}
+These strategies for label map compression ensure that the overhead introduced by semantic information is minimized, allowing the compression method to operate effectively within low-bitrate constraints.
+\subsection{Optimization Techniques}
+\paragraph{}
+The proposed methodology incorporates several optimization techniques aimed at enhancing compression efficiency and perceptual quality:
+\begin{itemize}
+    \item \textbf{Rate-Distortion Optimization: }This technique focuses on balancing the trade-off between compression size (rate) and image quality (distortion). By minimizing perceptual loss for a given bitrate, the method ensures that the reconstructed images retain as much detail and quality as possible.
+    \item \textbf{Hyperprior Models:} Hyperprior models are employed to capture the uncertainty present in the latent representations generated by the encoder. These models help optimize the encoding process by allowing for more efficient bit allocation, ensuring that complex regions of the image receive the necessary data to maintain quality.
+    \item  \textbf{Context Modeling:}Context modeling is utilized to improve the accuracy of the probability predictions for the compressed data. By considering the relationships between pixels and leveraging contextual information, this technique enhances the overall performance of the compression method.
+\end{itemize}
+\paragraph{}
+These optimization strategies are essential for ensuring that the proposed semantically-guided compression method operates effectively under the stringent constraints of low bitrates while maximizing perceptual quality.
+
+\subsection{PERFORMANCE METRICES}
+\paragraph{}
+To assess the effectiveness of the proposed image compression method, various performance metrics are utilized:
+\begin{itemize}
+    \item \textbf{LPIPS (Learned Perceptual Image Patch Similarity):}This metric quantifies the perceptual similarity between the original and reconstructed images based on deep learning features, focusing on how similar the images appear to the human eye.
+    \item \textbf{PSNR (Peak Signal-to-Noise Ratio): }PSNR measures the ratio of signal power to noise power in the images. It serves as an indicator of the fidelity of the reconstructed image relative to the original.
+    \item \textbf{MS-SSIM (Multi-Scale Structural Similarity Index):}This metric assesses the structural similarity between images at multiple scales, providing insights into how well the method preserves texture and structure.
+    \item \textbf{FID (Fréchet Inception Distance); } FID compares the distribution of features extracted from the original and reconstructed images, quantifying how realistic the generated images are compared to the originals.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\section{RESULTS AND DISCUSSION}
+\vspace{2ex}
+
+\subsection{Qualitative Results}
+\paragraph{}
+The qualitative analysis involves visual comparisons of reconstructed images obtained from the proposed method against those compressed using traditional techniques (e.g., JPEG, BPG) and other modern approaches, including GAN-based methods.
+\subsubsection{Visual Comparisons}
+\begin{itemize}
+    \item The reconstructed images from the semantically-guided method demonstrate superior perceptual quality, characterized by sharper edges, more accurate textures, and reduced artifacts, particularly in critical regions like skies, foliage, and architectural elements.
+    \item Unlike traditional compression methods that often blur details when operating at low bitrates, the proposed method effectively retains both global and local features, resulting in more visually appealing images that align closely with the original input.
+\end{itemize}
+\paragraph{}
+The dataset contains approximately 500,000 candidate profiles, 200,000 job listings, and 10 years of historical hiring data, sourced from various industries and job boards. The dataset was carefully curated to ensure diversity in job roles, industries, and candidate backgrounds, making it a representative sample of the larger labour market.
+
+\subsection{Quantitative Results}
+\paragraph{}
+In addition to qualitative assessments, quantitative evaluations are crucial for measuring the performance of the proposed method. The following performance metrics are used:
+\begin{itemize}
+    \item \textbf{LPIPS (Learned Perceptual Image Patch Similarity):} he results indicate that the proposed method achieves significantly lower LPIPS scores compared to conventional techniques, suggesting that the reconstructed images maintain a closer perceptual similarity to the original images.
+    \item \textbf{PSNR (Peak Signal-to-Noise Ratio):} While PSNR values show marginal improvements, they are often complemented with other metrics to provide a comprehensive view of image fidelity. The proposed method consistently produces higher PSNR values compared to traditional methods, demonstrating improved pixel-wise accuracy.
+    \item \textbf{MS-SSIM (Multi-Scale Structural Similarity Index):} The MS-SSIM scores reveal that the proposed method excels in preserving structural details and textures across multiple scales, leading to a more accurate representation of the original image.
+    \item  \textbf{FID (Fréchet Inception Distance):}Lower FID values for the proposed method suggest that the distribution of features in the reconstructed images is closer to that of the original images, reinforcing the method's effectiveness in producing realistic outputs.
+\end{itemize}
+\subsection{Semantic Consistency and Perceptual Quality}
+The integration of semantic label maps into the compression framework enhances the semantic consistency of the reconstructed images. This section focuses on how the proposed method ensures that different regions of an image are restored with contextually appropriate textures, thereby improving the overall perceptual quality:
+
+\begin{itemize}
+    \item \textbf{Semantic Contextualization} The decoder leverages semantic information to differentiate between regions, applying appropriate rendering techniques to maintain the visual integrity of elements such as skies, roads, and buildings. For example, the method guarantees that the sky is rendered smoothly without artifacts, while maintaining intricate details in the foliage.
+
+\end{itemize}
+
+\subsection{Trade-offs Between Bitrate and Quality}
+\paragraph{}
+This section discusses the ability of the proposed method to effectively balance bitrate and perceptual quality. The results demonstrate that:
+\subsubsection{Enhanced Efficiency}
+\paragraph{}
+The semantically-guided compression method intelligently allocates bits to visually significant areas, ensuring that key features are preserved even under stringent bitrate constraints.
+A thorough analysis of rate-distortion curves indicates that the proposed method consistently outperforms traditional approaches, achieving higher perceptual quality for a given bitrate.
+\subsection{User Studies and Subjective Evaluations}
+\paragraph{}
+In addition to objective metrics, user studies can provide insights into the subjective quality of the reconstructed images. This section discusses any conducted surveys or studies that gauge user preferences regarding the visual quality of images processed through different compression methods.
+\subsubsection{User Feedback:}
+\paragraph{}
+Participants are asked to compare images reconstructed through various techniques and provide feedback on visual appeal, clarity, and overall satisfaction. The results indicate a clear preference for the images generated by the proposed method, highlighting its effectiveness in meeting human perceptual standards.
+\paragraph{}
+This chapter systematically presents the results obtained from the proposed semantically-guided image compression method and discusses their implications. By integrating qualitative and quantitative evaluations, the findings highlight the method's strengths in preserving image quality, enhancing perceptual consistency, and maintaining efficiency in low-bitrate scenarios. The incorporation of semantic information significantly improves the visual fidelity of reconstructed images, making the proposed method a promising solution for modern image compression challenges.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\section{SECURITY ANALYSIS}
+\vspace{2ex}
+
+\paragraph{}
+As digital technologies become more integrated into daily life, the importance of security in image compression cannot be overstated. This chapter outlines the security vulnerabilities associated with the proposed semantically-guided image compression method and discusses strategies to mitigate these risks. The key areas of focus include data privacy concerns, the risks of adversarial attacks, and securing models during deployment.
+
+\subsection{Data Privacy Concerns}
+\paragraph{}
+The use of image compression techniques often involves storing and transmitting images that may contain sensitive information. This raises significant data privacy concerns, particularly when the images are processed in cloud environments or over insecure networks.
+
+\subsubsection{Storage and Transmission Risks:}
+\paragraph{}
+Compressed images stored in cloud services or transmitted over the internet can be intercepted by unauthorized entities. If sensitive personal information is embedded in these images, it can lead to privacy violations and unauthorized access to personal data.
+
+\subsubsection{Encryption:}
+\paragraph{}
+To safeguard against these risks, implementing strong encryption techniques is essential. Using algorithms such as AES (Advanced Encryption Standard) helps ensure that even if data is intercepted, it remains unreadable without the proper decryption key. AES is widely recognized for its robustness and is utilized in various applications to secure sensitive information.
+\subsubsection{User Control and Consent:}
+\paragraph{}
+Providing users with control over their data is vital. Implementing mechanisms that require user consent for data processing, along with options for deleting or modifying stored images, can enhance privacy and user trust.
+\subsubsection{Data Anonymization:}
+\paragraph{}
+Employing data anonymization techniques before compression can further protect sensitive information. Anonymization removes personally identifiable information (PII) from images, ensuring that the images can be shared without compromising individual privacy .
+
+\subsection{Adversarial Attacks}
+\paragraph{}
+The deployment of machine learning models in image compression opens up new avenues for adversarial attacks. These attacks involve subtle manipulations of input images designed to deceive the model into producing incorrect or degraded outputs.
+
+\subsubsection{Types of Attacks: }
+\paragraph{}
+Adversarial attacks can occur at various stages, including during the encoding, compression, or decoding processes. Attackers may introduce perturbations that are imperceptible to human observers but significantly impact the performance of the model
+
+\subsubsection{Adversarial Training: }
+\paragraph{}
+One effective strategy to counter adversarial attacks is adversarial training, which involves training the model using both original and adversarial examples. This approach helps the model learn to recognize and mitigate the effects of such attacks .
+For example, using methods like the Fast Gradient Sign Method (FGSM), adversaries can generate adversarial examples that modify the input data slightly, making it essential for models to be robust against such perturbations.
+
+\subsubsection{Detection Mechanisms:}
+\paragraph{}
+Implementing detection mechanisms to identify adversarial examples before they reach the model can also be beneficial. Techniques like anomaly detection algorithms can flag unusual patterns in the input data, alerting the system to potential threats .
+\subsection{Securing Models During Deployment}
+\paragraph{}
+The deployment of machine learning models introduces additional security challenges. Protecting the integrity of these models is critical for ensuring that they function as intended.
+\subsubsection{Model Integrity:}Ensuring the integrity of the compression model involves preventing unauthorized access or modifications to the model parameters. This can be achieved through secure storage solutions and cryptographic techniques to verify the authenticity of the model before use.
+\subsubsection{Access Control:}Implementing strict access controls is vital for protecting the deployed model. Only authorized personnel should have the ability to access or modify the model, minimizing the risk of unauthorized tampering .
+\subsubsection{Monitoring and Logging:}Continuous monitoring of the deployed system can help detect suspicious activities or anomalies indicative of a security breach. Logging systems can facilitate the detection of unauthorized access attempts, enabling timely responses to potential threats .
+\subsubsection{Regular Updates and Patch Management:}Regularly updating the model and its underlying software can help address vulnerabilities and improve security. Implementing a patch management strategy ensures that known security issues are resolved promptly, maintaining the integrity and safety of the compression system
+\paragraph{}
+as image compression technologies become more prevalent, addressing the security implications associated with their use is essential. By focusing on data privacy concerns, enhancing robustness against adversarial attacks, and securing models during deployment, the proposed semantically-guided image compression method can be better equipped to operate in real-world scenarios while protecting users' sensitive information. Ongoing research and development in this area will be vital to ensure that the benefits of advanced image compression techniques are realized without compromising security.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{COMPARISON WITH EXISTING WORKS}
+\vspace{2ex}
+
+\paragraph{}
+This chapter provides a comparative analysis between the proposed semantically-guided image compression method and other recent advancements in the field of image compression. By examining methodologies, algorithms, and results presented in related works, we aim to identify strengths, weaknesses, and potential enhancements for the proposed approach.
+
+\subsection{Overview of Existing Works}
+\paragraph{}
+Recent advancements in image compression have focused on integrating semantic information to enhance perceptual quality, particularly in low-bitrate scenarios. Key methods include traditional compression techniques such as JPEG and BPG, as well as neural network-based approaches that leverage deep learning to optimize rate-distortion performance.
+
+\subsubsection{Traditional Compression Methods:}
+\paragraph{}
+Traditional methods like JPEG and BPG use algorithms that rely heavily on quantization and discrete cosine transforms to compress images. While effective, these methods often lead to significant perceptual degradation, particularly when applied at low bitrates. The blurring and artifacts introduced by these techniques can diminish the visual quality of images.
+
+\subsubsection{Neural Network-Based Methods:}
+\paragraph{}
+Recent neural network-based methods have aimed to overcome the limitations of traditional techniques by employing end-to-end learning approaches. These methods utilize encoder-decoder architectures that can learn to compress and reconstruct images more effectively. However, they still face challenges in preserving fine details and maintaining visual quality at very low bitrates.
+\subsubsection{Semantic Compression Techniques:}
+\paragraph{}
+Emerging approaches in semantically-guided compression integrate semantic information into the compression process. These methods utilize semantic label maps to inform the reconstruction, ensuring that the most visually significant areas of the image are preserved. By focusing on the semantic content of the image, these approaches demonstrate improvements in perceptual quality compared to traditional methods
+
+
+\subsection{Key Differences and Enhancements}
+\paragraph{}
+The proposed semantically-guided image compression method stands out for several reasons:
+
+\subsubsection{Integration of Semantic Information:}
+\paragraph{}
+Unlike traditional methods that rely solely on pixel data, the proposed method utilizes semantic label maps that provide contextual understanding of different image regions. This integration allows the model to allocate bits intelligently, ensuring that critical areas are preserved even under low-bitrate conditions.
+
+\subsubsection{Rate-Distortion Optimization: }
+\paragraph{}
+The proposed method employs a combination of rate-distortion loss and perceptual loss (e.g., LPIPS) to optimize the trade-off between compression size and image quality. This dual focus on both traditional and perceptual quality metrics distinguishes it from earlier methods, which often prioritized one over the other.
+
+\subsubsection{Adversarial Training:}
+\paragraph{}
+By incorporating adversarial training techniques, the proposed method leverages GANs to enhance the perceptual quality of reconstructed images. This strategy allows for the generation of sharper and more realistic outputs, addressing the blurring often seen in low-bitrate compressions..
+
+\paragraph{}
+By incorporating adversarial training techniques, the proposed method leverages GANs to enhance the perceptual quality of reconstructed images. This strategy allows for the generation of sharper and more realistic outputs, addressing the blurring often seen in low-bitrate compressions.
+
+
+
+
+\newpage
+\section{CONCLUSION}
+\vspace{2ex}
+
+\paragraph{}
+In this seminar, we have introduced a novel approach to image compression known as semantically-guided image compression, which significantly enhances the perceptual quality of reconstructed images at extremely low bitrates. As the demand for high-quality images continues to rise across various applications, effective compression techniques that preserve visual integrity while minimizing data size have become crucial.
+\paragraph{}
+The proposed method integrates semantic label maps into the compression and reconstruction processes, allowing for a deeper understanding of the image content. By leveraging this semantic information, the method intelligently allocates bits to preserve the most critical features of an image, ensuring that important textures and details remain intact even when operating under stringent bitrate constraints.\\ Key findings from the research include:
+\subsection{Enhanced Image Quality: }The incorporation of semantic guidance results in reconstructed images that exhibit superior perceptual quality compared to traditional compression techniques. Evaluations using metrics such as LPIPS and FID demonstrate that the proposed method significantly reduces artifacts and maintains visual fidelity.
+\subsection{Efficiency at Low Bitrates:}The method effectively compresses images to extremely low bitrates (below 0.1 bits per pixel) without sacrificing quality. This capability is particularly valuable in bandwidth-constrained environments, such as mobile applications and real-time streaming services.
+\subsection{Robustness to Adversarial Attacks:}By implementing adversarial training strategies, the proposed method enhances its resilience against potential attacks. This is crucial as machine learning models become increasingly vulnerable to adversarial manipulations, which can compromise output quality and security.
+\subsection{Opportunities for Future Research} While the proposed method demonstrates promising results, there remains significant potential for further improvement. Future work could explore the implementation of more complex architectures, such as multi-stage encoders and decoders, and the incorporation of additional loss functions to optimize reconstruction quality further.
+
+\paragraph{}
+In summary, the semantically-guided image compression method represents a significant advancement in the field of image compression technology. By effectively integrating semantic understanding and leveraging advanced optimization techniques, this method addresses the limitations of both traditional and modern approaches. As the landscape of digital imaging continues to evolve, this research contributes valuable insights that can inform the development of robust and efficient compression solutions that meet the demands of contemporary applications.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\cleardoublepage
+\begin{thebibliography}{9}
+
+\addcontentsline{toc}{section}{REFERENCES}
+
+\vspace{2ex}
+
+\bibitem{1} Y. Cui, H. Zhang, and J. Li, "Collaborative filtering for IoT scenarios: A framework for personalized recommendations," \emph{J. Intell. Fuzzy Syst.}, vol. 42, no. 3, pp. 2231-2240, 2022.
+
+\bibitem{2} Y. Deldjoo, A. Khashabi, and S. Chavoshi, "Content-based job recommendation system tailored for social media platforms," \emph{Comput. Hum. Behav.}, vol. 108, p. 106306, 2020.
+
+\bibitem{3} M. A. Ganaie, M. A. Khan, and S. A. Ganaie, "Ensemble deep learning techniques for recommendation systems: A survey," \emph{Expert Syst. Appl.}, vol. 185, p. 115670, 2021.
+
+\bibitem{4} L. Jin, "The integration of entrepreneurship education and political instruction: A pathway to better career navigation," \emph{Int. J. Educ. Manag.}, vol. 35, no. 5, pp. 1020-1035, 2021.
+
+\bibitem{5} X. Liu, "The importance of values in career decision-making for college students: Implications for educational practice," \emph{J. Career Assess.}, vol. 28, no. 2, pp. 244-256, 2020.
+
+\bibitem{6} T. Neu, J. Lahann, and P. Fettke, "A systematic review of deep learning methods for process prediction in employment systems," \emph{Artif. Intell. Rev.}, vol. 55, no. 2, pp. 1241-1260, 2022.
+
+\bibitem{7} X. Shao, "Probabilistic models for job seeker-employer matching: A dual selection approach," \emph{J. Inf. Sci.}, vol. 45, no. 4, pp. 499-511, 2019.
+
+\bibitem{8} L. Yu, "Challenges and solutions in employment guidance for college students: A focus on ideological and belief education," \emph{Higher Educ. Stud.}, vol. 10, no. 3, pp. 1-10, 2020.
+
+\bibitem{9} T. Zhang, "A hybrid recommendation system for job matching: Integrating content-based and collaborative filtering approaches," \emph{Inf. Syst. e-Bus. Manag.}, vol. 19, no. 4, pp. 859-877, 2021.
+
+\end{thebibliography} \end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

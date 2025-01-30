@@ -1,0 +1,188 @@
+Sure, here’s a comprehensive breakdown:
+
+### Python 1 Basics
+
+#### Basic Syntax and Data Structures
+1. **Variables and Data Types**:
+   - Integers, floats, strings, lists, tuples, dictionaries.
+   - `int_var = 10`
+   - `float_var = 10.5`
+   - `str_var = "Hello"`
+   - `list_var = [1, 2, 3]`
+   - `tuple_var = (1, 2, 3)`
+   - `dict_var = {"key": "value"}`
+
+2. **Operators**:
+   - Arithmetic: `+`, `-`, `*`, `/`
+   - Comparison: `==`, `!=`, `<`, `>`, `<=`, `>=`
+   - Logical: `and`, `or`, `not`
+
+#### Control Structures
+1. **Conditional Statements**:
+   - `if`, `elif`, `else`
+   ```python
+   if condition:
+       # do something
+   elif another_condition:
+       # do something else
+   else:
+       # do another thing
+   ```
+
+2. **Looping Statements**:
+   - `for` loops:
+     ```python
+     for item in iterable:
+         # do something
+     ```
+   - `while` loops:
+     ```python
+     while condition:
+         # do something
+     ```
+
+#### Functions
+1. **Defining Functions**:
+   - Using `def` keyword
+   ```python
+   def function_name(parameters):
+       # function body
+       return value
+   ```
+
+2. **Built-in Functions**:
+   - Examples: `len()`, `range()`, `type()`, `print()`
+
+#### Modules
+1. **Importing Modules**:
+   - Using `import` keyword
+   ```python
+   import module_name
+   ```
+
+2. **Using Module Functions**:
+   ```python
+   module_name.function()
+   ```
+
+#### Exception Handling
+1. **Basic Exception Handling**:
+   - Using `try` and `except`
+   ```python
+   try:
+       # code that might raise an exception
+   except Exception as e:
+       # code that runs if an exception occurs
+   ```
+
+### Python 2 Changes
+
+1. **Print Statement**:
+   - From: `print "Hello"`
+   - To: `print("Hello")`
+
+2. **Division**:
+   - Integer division if both operands are integers.
+   - Use `//` for floor division.
+
+3. **Unicode Strings**:
+   - Introduced `unicode` type for Unicode strings.
+   - Byte strings remain as `str`.
+
+4. **xrange**:
+   - Introduced `xrange()` for efficient looping without creating a list.
+
+5. **Error Handling**:
+   - `except Exception, e:` syntax for catching exceptions.
+
+6. **Iterators and Generators**:
+   - Introduction of generator functions using `yield`.
+
+7. **Next Function**:
+   - `iterator.next()` for getting the next item from an iterator.
+
+8. **Dictionary Changes**:
+   - Methods like `dict.iteritems()`, `dict.iterkeys()`, `dict.itervalues()` for efficient iteration.
+
+9. **Integer Division**:
+   - `5 / 2` results in `2`.
+
+10. **Input Function**:
+    - `input()` evaluates input as code, `raw_input()` reads input as a string.
+
+11. **Metaclasses**:
+    - Using `__metaclass__` attribute to define metaclasses.
+
+12. **Standard Library Expansion**:
+    - Significant expansion and addition of modules and packages.
+
+### Python 3 Changes
+
+1. **Print Function**:
+   - Requires parentheses: `print("Hello")`.
+
+2. **Division**:
+   - `/` performs true division, regardless of operand types.
+   - `//` is used for floor division.
+
+3. **Unicode Strings**:
+   - `str` is now a Unicode string.
+   - Introduced `bytes` for byte strings.
+
+4. **Range Function**:
+   - `range()` now returns an immutable sequence, similar to `xrange()` in Python 2.
+
+5. **Error Handling**:
+   - `except Exception as e:` syntax for catching exceptions.
+
+6. **Iterators and Generators**:
+   - Standard library functions now return iterators instead of lists.
+
+7. **Next Function**:
+   - Use `next(iterator)` instead of `iterator.next()`.
+
+8. **Dictionary Changes**:
+   - Removed `dict.iteritems()`, `dict.iterkeys()`, `dict.itervalues()`.
+   - Use `dict.items()`, `dict.keys()`, `dict.values()` which return view objects.
+
+9. **Integer Division**:
+   - `5 / 2` results in `2.5`.
+
+10. **Input Function**:
+    - `input()` always reads input as a string.
+
+11. **Metaclasses**:
+    - Define metaclasses using: `class MyClass(BaseClass, metaclass=MetaClass):`.
+
+12. **Function Annotations**:
+    - Added support for function annotations.
+    ```python
+    def func(a: int, b: str) -> float:
+        return float(a)
+    ```
+
+13. **Standard Library Reorganization**:
+    - Modules renamed/reorganized, e.g., `ConfigParser` to `configparser`.
+
+14. **New Syntax Features**:
+    - Extended unpacking:
+      ```python
+      a, *rest, b = [1, 2, 3, 4, 5]
+      ```
+    - Keyword-only arguments:
+      ```python
+      def func(a, b, *, kwarg1, kwarg2):
+          pass
+      ```
+    - `async` and `await` for asynchronous programming.
+
+15. **Removal of Deprecated Features**:
+    - Deprecated features from Python 2 removed.
+
+16. **Bytes and Bytearray**:
+    - `bytes` and `bytearray` types for binary data handling.
+
+17. **Standard Library Improvements**:
+    - Enhanced functionality in many modules.
+
+This detailed comparison highlights the core features of Python 1 and the significant changes introduced in Python 2 and Python 3.

@@ -1,0 +1,52 @@
+Here's a list of useful keyboard shortcuts for Windows 11:
+
+### General Shortcuts:
+- **Windows + A**: Open Quick Settings (Action Center)
+- **Windows + B**: Set focus to the first icon in the taskbar corner
+- **Windows + C**: Open Microsoft Teams chat (if Teams is installed)
+- **Windows + D**: Show or hide the desktop
+- **Windows + E**: Open File Explorer
+- **Windows + F**: Open Feedback Hub and take a screenshot
+- **Windows + G**: Open Xbox Game Bar
+- **Windows + H**: Open voice typing
+- **Windows + I**: Open Settings
+- **Windows + K**: Open Cast
+- **Windows + L**: Lock your PC or switch accounts
+- **Windows + M**: Minimize all windows
+- **Windows + N**: Open Notification Center and Calendar
+- **Windows + P**: Project a screen
+- **Windows + R**: Open Run dialog box
+- **Windows + S**: Open Search
+- **Windows + Shift + S**: Open Snipping Tool
+- **Windows + T**: Cycle through apps on the taskbar
+- **Windows + U**: Open Accessibility Settings
+- **Windows + V**: Open Clipboard history
+- **Windows + W**: Open Widgets
+- **Windows + X**: Open Quick Link menu (Power User Menu)
+- **Windows + Z**: Open Snap Layouts
+- **Windows + .** or **Windows + ;**: Open Emoji Panel
+- **Windows + Space**: Switch keyboard input language and layout
+- **Windows + Tab**: Open Task View
+
+### Window Management:
+- **Windows + Up Arrow**: Maximize the window
+- **Windows + Down Arrow**: Minimize the window
+- **Windows + Left Arrow**: Snap window to the left half of the screen
+- **Windows + Right Arrow**: Snap window to the right half of the screen
+- **Windows + Home**: Minimize all windows except the active one
+- **Windows + Shift + Up Arrow**: Stretch the window to the top and bottom of the screen
+- **Windows + Shift + Down Arrow**: Restore/minimize the window vertically
+- **Windows + Shift + Left/Right Arrow**: Move an app or window from one monitor to another
+
+### Virtual Desktops:
+- **Windows + Ctrl + D**: Add a virtual desktop
+- **Windows + Ctrl + Left/Right Arrow**: Switch between virtual desktops
+- **Windows + Ctrl + F4**: Close the current virtual desktop
+
+### Accessibility:
+- **Windows + U**: Open Ease of Access Center
+- **Windows + Plus (+)**: Open Magnifier and zoom in
+- **Windows + Minus (-)**: Zoom out in Magnifier
+- **Windows + Esc**: Close Magnifier
+
+These shortcuts can significantly enhance your productivity and navigation experience in Windows 11.
